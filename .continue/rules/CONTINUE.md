@@ -10,7 +10,7 @@ The AI Writer App is a tool designed to help writers research and edit their con
 - Organize research materials
 
 ### Key Technologies
-- **Frontend**: FastHTML framework
+- **Frontend**: HTML + htmx for rich interactions
 - **AI Components**: Langchain/Langgraph framework
 - **Backend**: Python
 - **Database**: Sqlite (SQL DB), Qdrant (Vector DB in local mode to persist vector information)
@@ -168,7 +168,7 @@ Ignore these files, they are temporary:
 ## References
 
 ### Documentation
-- [FastHTML Documentation](https://fastht.ml/docs/index.html)
+- [Django Documentation](https://docs.djangoproject.com/en/5.2/)
 - [Langchain Documentation](https://docs.langchain.com/)
 
 ### Important Resources

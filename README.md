@@ -1,6 +1,6 @@
-# FastHTML Hello World
+# Writer App
 
-A simple Hello World application using the FastHTML framework.
+AI enabled writer app to help writers to write content
 
 ## Prerequisites
 - Python 3.10+
