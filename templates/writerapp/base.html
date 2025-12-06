@@ -1,0 +1,21 @@
+<!-- writerapp/templates/writerapp/base.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AI Writer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- optional: htmx -->
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</head>
+<body style="font-family: system-ui, sans-serif; margin: 24px;">
+  <nav>
+    <a href="{% url 'writerapp:home' %}">Home</a> |
+    <a href="/admin/">Admin</a>
+  </nav>
+  <hr/>
+  <main>
+    {% block content %} {% endblock %}
+  </main>
+</body>
+</html>

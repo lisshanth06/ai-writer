@@ -1,0 +1,32 @@
+{% extends "writerapp/base.html" %}
+{% block content %}
+<h1>{{ project.title }}</h1>
+
+<h2>Document</h2>
+<form method="post" action="#">
+  {% csrf_token %}
+  <textarea name="document" rows="12" style="width:100%;">{{ project.document }}</textarea>
+  <div style="margin-top:8px;">
+    <button type="submit" disabled>Save document (implement later)</button>
+  </div>
+</form>
+
+<hr/>
+<h2>Sources</h2>
+
+<form hx-post="{% url 'writerapp:create_source' project.pk %}"
+      hx-target="#sources"
+      hx-swap="outerHTML"
+      method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Source</button>
+</form>
+
+<div id="sources" style="margin-top:16px;">
+  {% include "writerapp/includes/sources_table.html" %}
+</div>
+
+{% endblock %}
+
+

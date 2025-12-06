@@ -1,0 +1,20 @@
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in project.sources.all %}
+      <tr>
+        <td>{{ s.title }}</td>
+        <td>{{ s.get_source_type_display }}</td>
+        <td>{{ s.created_at }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3">No sources</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
