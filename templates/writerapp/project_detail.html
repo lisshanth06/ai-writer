@@ -1,32 +1,43 @@
+<!-- writerapp/templates/writerapp/project_detail.html -->
 {% extends "writerapp/base.html" %}
 {% block content %}
-<h1>{{ project.title }}</h1>
+  <h2>{{ project.title }}</h2>
 
-<h2>Document</h2>
-<form method="post" action="#">
-  {% csrf_token %}
-  <textarea name="document" rows="12" style="width:100%;">{{ project.document }}</textarea>
-  <div style="margin-top:8px;">
-    <button type="submit" disabled>Save document (implement later)</button>
+  <div class="card">
+    <div class="tabs" role="tablist">
+      <!-- Use HTMX to load tab fragments -->
+      <a hx-get="{% url 'writerapp:fragment_document' project.pk %}" hx-target="#tab-content" hx-swap="innerHTML" class="tab" id="tab-doc">Document</a>
+      <a hx-get="{% url 'writerapp:fragment_sources' project.pk %}" hx-target="#tab-content" hx-swap="innerHTML" class="tab" id="tab-src">Sources</a>
+    </div>
+
+    <!-- default tab content (server-rendered) - we load document by default -->
+    <div id="tab-content">
+      {% include "writerapp/includes/document_tab.html" %}
+    </div>
   </div>
-</form>
 
-<hr/>
-<h2>Sources</h2>
+  <p style="margin-top:12px;">
+    <a class="btn secondary" href="{% url 'writerapp:home' %}">Back</a>
+  </p>
 
-<form hx-post="{% url 'writerapp:create_source' project.pk %}"
-      hx-target="#sources"
-      hx-swap="outerHTML"
-      method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Add Source</button>
-</form>
+  <script>
+    // Make the first tab active visually and setup click classes
+    document.addEventListener("DOMContentLoaded", function(){
+      function setActiveTab(el){
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        if(el) el.classList.add("active");
+      }
+      // set document tab active initially
+      setActiveTab(document.getElementById("tab-doc"));
 
-<div id="sources" style="margin-top:16px;">
-  {% include "writerapp/includes/sources_table.html" %}
-</div>
-
+      // attach delegated listener to update active class on HTMX requests
+      document.body.addEventListener('htmx:afterSwap', function(evt){
+        // when content swapped into #tab-content, highlight correct tab (by hx-get URL matching)
+        let trigger = evt.detail.requestConfig ? evt.detail.requestConfig.path : null;
+        if(!trigger && evt.detail.elt) trigger = evt.detail.elt.getAttribute('hx-get');
+        if(trigger && trigger.includes('fragment/document')) setActiveTab(document.getElementById("tab-doc"));
+        if(trigger && trigger.includes('fragment/sources')) setActiveTab(document.getElementById("tab-src"));
+      });
+    });
+  </script>
 {% endblock %}
-
-

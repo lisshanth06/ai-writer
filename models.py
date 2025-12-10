@@ -10,7 +10,7 @@ SOURCE_TYPE_CHOICES = [
 
 class Project(models.Model):
     title = models.CharField(max_length=255)
-    document = models.TextField(blank=True, help_text="Plain text document content")
+    document = models.TextField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -25,8 +25,8 @@ class Source(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="sources")
     title = models.CharField(max_length=255)
     source_type = models.CharField(max_length=10, choices=SOURCE_TYPE_CHOICES, default="text")
-    raw_text = models.TextField(help_text="Source text (paste / web summary / transcription)")
-    meta = models.JSONField(default=dict, blank=True, help_text="Optional metadata (url, filename, etc.)")
+    raw_text = models.TextField(blank=True)
+    meta = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

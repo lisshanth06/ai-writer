@@ -5,7 +5,6 @@ from .models import Project, Source
 class SourceInline(admin.TabularInline):
     model = Source
     extra = 0
-    fields = ("title", "source_type", "created_at")
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -16,5 +15,5 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(Source)
 class SourceAdmin(admin.ModelAdmin):
     list_display = ("title", "project", "source_type", "created_at")
+    list_filter = ("source_type",)
     search_fields = ("title", "raw_text")
-    list_filter = ("source_type", "created_at")

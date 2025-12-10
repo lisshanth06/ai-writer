@@ -1,0 +1,21 @@
+<!-- writerapp/templates/writerapp/new_project.html -->
+{% extends "writerapp/base.html" %}
+{% block content %}
+  <h2>Create a new project</h2>
+
+  <form method="post" action="{% url 'writerapp:new_project' %}">
+    {% csrf_token %}
+    <div style="margin-bottom:12px;">
+      {{ form.title.label_tag }}<br>
+      {{ form.title }}
+      {% for error in form.title.errors %}
+        <div style="color:red;">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div>
+      <button class="btn" type="submit">Save project</button>
+      <a class="btn secondary" href="{% url 'writerapp:home' %}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

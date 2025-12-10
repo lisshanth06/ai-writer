@@ -1,0 +1,24 @@
+<!-- writerapp/templates/writerapp/includes/sources_tab.html -->
+<div>
+  <h4>Add Source</h4>
+  <form id="source-form" method="post" action="{% url 'writerapp:create_source' project.pk %}"
+        hx-post="{% url 'writerapp:create_source' project.pk %}"
+        hx-target="#sources-table"
+        hx-swap="outerHTML">
+    {% csrf_token %}
+    {{ source_form.title.label_tag }}<br>
+    {{ source_form.title }}<br>
+    {{ source_form.source_type.label_tag }}<br>
+    {{ source_form.source_type }}<br>
+    {{ source_form.raw_text.label_tag }}<br>
+    {{ source_form.raw_text }}<br>
+    <div style="margin-top:8px;">
+      <button class="btn" type="submit">Add source</button>
+    </div>
+  </form>
+
+  <h4 style="margin-top:12px;">Sources</h4>
+  <div id="sources-table">
+    {% include "writerapp/includes/sources_table.html" %}
+  </div>
+</div>

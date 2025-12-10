@@ -1,12 +1,28 @@
+<!-- writerapp/templates/writerapp/home.html -->
 {% extends "writerapp/base.html" %}
 {% block content %}
-<h1>Projects</h1>
-<p><a href="/admin/writerapp/project/add/">Create project (admin)</a></p>
-<ul>
-  {% for p in projects %}
-    <li><a href="{% url 'writerapp:project_detail' p.pk %}">{{ p.title }}</a> — updated {{ p.updated_at }}</li>
-  {% empty %}
-    <li>No projects yet.</li>
-  {% endfor %}
-</ul>
+  <h2>Projects</h2>
+
+  <p>
+    <a class="btn" href="{% url 'writerapp:new_project' %}">+ New Project</a>
+  </p>
+
+  {% if projects %}
+    <table>
+      <thead>
+        <tr><th>Project name</th><th>Updated</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for p in projects %}
+        <tr>
+          <td><a href="{% url 'writerapp:project_detail' p.pk %}">{{ p.title }}</a></td>
+          <td>{{ p.updated_at|date:"Y-m-d H:i" }}</td>
+          <td><a class="btn secondary" href="{% url 'writerapp:project_detail' p.pk %}">Open</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No projects yet. Click <strong>New Project</strong> to create one.</p>
+  {% endif %}
 {% endblock %}

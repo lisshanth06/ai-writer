@@ -1,0 +1,23 @@
+<!-- writerapp/templates/writerapp/includes/document_tab.html -->
+<div>
+  <form id="doc-form" method="post" action="{% url 'writerapp:save_document' project.pk %}">
+    {% csrf_token %}
+    <label for="document-textarea"><strong>Document</strong></label>
+    <textarea id="document-textarea" name="document" rows="12"
+      hx-post="{% url 'writerapp:save_document' project.pk %}"
+      hx-trigger="blur from:#document-textarea, changed"
+      hx-include="#document-textarea"
+      hx-swap="none"
+    >{{ project.document }}</textarea>
+
+    <div style="margin-top:8px;">
+      <button class="btn" type="button"
+        hx-post="{% url 'writerapp:save_document' project.pk %}"
+        hx-include="#document-textarea"
+        hx-swap="outerHTML:#save-status">
+        Save now
+      </button>
+      <span id="save-status" style="margin-left:12px;"></span>
+    </div>
+  </form>
+</div>
